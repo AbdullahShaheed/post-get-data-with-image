@@ -13,23 +13,31 @@ const storage = multer.diskStorage({
   },
 });
 
-//init upload
+//initialize upload
 const upload = multer({
   storage: storage,
 });
 
-//GET
-router.get("/", (req, res) => {
-  //get name and image filename from database then response to client
-  //with the name and image data picked from server fs /public/uploads
-  // and stream to client
-  res.send({ name: "product 1", image: "AGhgAHGfHGahgfHAGFhjgf" });
+//POST
+router.post("/", upload.single("productImage"), async (req, res) => {
+  // try {
+  //   await db.query(
+  //     "INSERT INTO products VALUES (DEFAULT, 'tomato', '1', 'fake path');"
+  //   );
+  //   res.send("Saved.");
+  // } catch (err) {
+  //   res.send(err.message);
+  // }
+  res.send("image saved");
 });
 
-//POST
-router.post("/", upload.single("myImage"), (req, res) => {
-  //save to database  name: req.body.name, image: req.file.filename
-  res.send("saved to database");
+//GET
+router.get("/", (req, res) => {
+  res.send({ name: "a", price: 10 });
+});
+
+router.get("/images", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/uploads/photo.png")); //ok
 });
 
 module.exports = router;
