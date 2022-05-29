@@ -8,8 +8,10 @@ the second request is invoked by the end of the first request to get the image f
 
 You need the folowing command to render the file you got in response.data in an img element:
 
-const output = URL.createObjectURL(response.data)
-<img src={output}/>
+const dataURL = URL.createObjectURL(response.data)
+
+and set src attribute of the img element to this dataURL.
+
 
 Note that postman doesn't work properly with form-data request, so you need to test your app via your client 
 app, like React in my case.
