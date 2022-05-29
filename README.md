@@ -18,7 +18,7 @@ multer is very important to deal with form-data. req.body will holds text fields
 submitted by the form.
 
 Note: if you are using simple html document as your client such as 'template engine' in Node,
-then you need to specify the action attribute of theform like this: <form action="multipart/form-data">...<form/>
+then you need to specify the action attribute of theform like this: <form action="multipart/form-data"><form/>
   
 some useful links:  
   
