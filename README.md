@@ -20,3 +20,9 @@ Note: if you are using simple html document as your client such as 'template eng
 then you need to specify the action attribute of theform like this: <form action="multipart/form-data">...<form/>
   
 some useful links:  
+  
+How to send a File from React to NodeJS with Multer 2.0 (Express) https://www.youtube.com/watch?v=KoWTJ5XiYm4 very very good
+
+Node.js Image Uploading With Multer https://www.youtube.com/watch?v=9Qzmri1WaaE Traversy Media Channel
+
+React File Uploader With Express (Using React Hooks) https://www.youtube.com/watch?v=b6Oe2puTdMQ Traversy Media Channel
