@@ -7,6 +7,7 @@ For GET, it is two subsequent request. The first request is to get the text data
 the second request is invoked by the end of the first request to get the image file as 'blob'.
 
 You need the folowing command to render the file you got in response.data in an img element:
+
 const dataURL = URL.createObjectURL(response.data)
 <img src={dataURL}/>
 
