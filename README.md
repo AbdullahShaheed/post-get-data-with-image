@@ -6,7 +6,7 @@ by multer will be saved to the database for that resource.
 For GET, it is two subsequent request. The first request is to get the text data as json, 
 the second request is invoked by the end of the first request to get the image file as 'blob'.
 
-You need the folowing command to render the file you got in response.data in an 'img' element:
+You need the folowing command to render the file you got in response.data in an img element:
 
 const dataURL = URL.createObjectURL(response.data)
 <img src={dataURL}/>
@@ -18,7 +18,8 @@ multer is very important to deal with form-data. req.body will holds text fields
 submitted by the form.
 
 Note: if you are using simple html document as your client such as 'template engine' in Node,
-then you need to specify the action attribute of theform like this: <form action="multipart/form-data">
+then you need to specify the action attribute of theform like this: 
+<form action="multipart/form-data">
   
 some useful links:  
   
