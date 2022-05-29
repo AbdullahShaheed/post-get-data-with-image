@@ -9,4 +9,4 @@ require("./db")();
 app.listen(3001, () => console.log("Listening on port 3001.."));
 
 //middlewares and routes
-app.use("/api/products", products);
+app.use("/", products);

@@ -5,9 +5,9 @@ const endpoint = "http://localhost:3001";
 
 class Form extends React.Component {
   state = {
-    data: { name: "", price: "", file: {} },
-    errors: {},
+    data: { name: "", price: "", image: {} },
     message: "",
+    productId: "",
     image: "",
   };
 
@@ -17,7 +17,7 @@ class Form extends React.Component {
     const formData = new FormData();
     formData.append("name", this.state.name);
     formData.append("price", this.state.price);
-    formData.append("productImage", this.state.file);
+    formData.append("productImage", this.state.image);
 
     try {
       await axios.post(endpoint, formData);
@@ -30,11 +30,11 @@ class Form extends React.Component {
   handleGet = async (e) => {
     e.preventDefault();
 
-    const res1 = await axios.get(endpoint);
+    const res1 = await axios.get(endpoint + "/" + this.state.productId);
 
     this.setState({ data: res1.data });
 
-    const res2 = await axios.get(endpoint + "/images", {
+    const res2 = await axios.get(`${endpoint}/images/${this.state.productId}`, {
       responseType: "blob",
     });
 
@@ -46,11 +46,11 @@ class Form extends React.Component {
   render() {
     return (
       <>
-        <h2>File Upload</h2>
+        <h2>File Upload and Download</h2>
         <p>{this.state.message}</p>
         <form>
           <div>
-            <label>Name</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               id="name"
@@ -61,39 +61,50 @@ class Form extends React.Component {
             />
           </div>
           <div>
-            <label>Price</label>
+            <label htmlFor="price">Price</label>
             <input
               type="text"
               id="price"
               name="price"
               onChange={(e) => {
-                this.setState({ name: e.target.value });
+                this.setState({ price: e.target.value });
               }}
             />
           </div>
 
           <div>
-            <label>File</label>
+            <label>Image</label>
             <input
               type="file"
               id="image"
               name="productImage"
               accept=".jpg, .png, .gif"
               onChange={(e) => {
-                this.setState({ file: e.target.files[0] });
+                this.setState({ image: e.target.files[0] });
               }}
             />
           </div>
 
-          <button onClick={this.handleSubmit}>Submit Data</button>
+          <button onClick={this.handleSubmit}>Submit Form Data</button>
         </form>
-        <br />
-        <button onClick={this.handleGet}>Get Data and Image</button>
-        <ul>
-          <li>{this.state.data.name}</li>
-          <li>{this.state.data.price}</li>
-        </ul>
-        <img src={this.state.image} />
+        <hr />
+        <form>
+          <button onClick={this.handleGet}>Get Product with Image</button>
+          <input
+            type="text"
+            id="productId"
+            name="productId"
+            placeholder="Enter id"
+            onChange={(e) =>
+              this.setState({ productId: e.currentTarget.value })
+            }
+          />
+          <ul>
+            <li>{this.state.data.name}</li>
+            <li>{this.state.data.price}</li>
+          </ul>
+          <img src={this.state.image} />
+        </form>
       </>
     );
   }

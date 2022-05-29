@@ -20,24 +20,39 @@ const upload = multer({
 
 //POST
 router.post("/", upload.single("productImage"), async (req, res) => {
-  // try {
-  //   await db.query(
-  //     "INSERT INTO products VALUES (DEFAULT, 'tomato', '1', 'fake path');"
-  //   );
-  //   res.send("Saved.");
-  // } catch (err) {
-  //   res.send(err.message);
-  // }
-  res.send("image saved");
+  let p = {
+    name: req.body.name,
+    price: parseInt(req.body.price),
+    image: req.file.filename,
+  };
+  try {
+    await db.query("INSERT INTO products VALUES (DEFAULT, ?, ?, ?);", [
+      p.name,
+      p.price,
+      p.image,
+    ]);
+    res.send("Saved.");
+  } catch (err) {
+    res.send(err.message);
+  }
 });
 
 //GET
-router.get("/", (req, res) => {
-  res.send({ name: "a", price: 10 });
+router.get("/:id", async (req, res) => {
+  const product = await db.query(
+    "SELECT * FROM products WHERE product_id = ?",
+    [req.params.id]
+  );
+  res.send(product[0][0]);
 });
 
-router.get("/images", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/uploads/photo.png")); //ok
+router.get("/images/:id", async (req, res) => {
+  const result = await db.query(
+    "SELECT image FROM products WHERE product_id = ?",
+    [req.params.id]
+  );
+
+  res.sendFile(path.join(__dirname, `../public/uploads/${result[0][0].image}`)); //result is complex
 });
 
 module.exports = router;
